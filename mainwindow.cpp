@@ -5,6 +5,7 @@
 #include <QDir>
 #include <QSettings>
 #include "settingsdialog.h"
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -12,6 +13,10 @@ MainWindow::MainWindow(QWidget *parent) :
     msettingsDialog (new SettingsDialog ( this ) )
 {
     ui->setupUi(this);
+
+   // m_sSettingsFile = QApplication::applicationDirPath().left(1) + ":/settings.ini";
+    m_sSettingsFile = QApplication::applicationDirPath() + "/settings.ini";
+    qDebug() << "App path : " << m_sSettingsFile;
 
     //Задаём комбинации клавиш для действий
     ui->action_Undo->setShortcut ( QKeySequence::Undo );
@@ -48,7 +53,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->action_About_program, SIGNAL(triggered()), this, SLOT(slotAboutProgram()),Qt::UniqueConnection);
 
     connect(ui->actionPreferences, SIGNAL(triggered()),this, SLOT(showPreferencesDialog()), Qt::UniqueConnection);
-    connect(msettingsDialog, SIGNAL(accepted()), this, SLOT (slotPreferencesAccepted()), Qt::UniqueConnection);
+    connect(msettingsDialog, SIGNAL(accepted()),this,SLOT(slotPreferencesAccepted()), Qt::UniqueConnection);
 
     //В конце вызываем слот для нового документа. Таким образом, пользователь сможет сразу
     //же приступить к работе
@@ -217,9 +222,11 @@ void MainWindow::readSettings ( )
 //Указываем, где хранились настройки. QSettings::NativeFormat — в формате определенном системой
 //QSettings::UserScope — настройки для каждого пользователя отдельно.
 //Также устанавливаем имя организации и название программы
-    QSettings lsettings ( QSettings::NativeFormat, QSettings::UserScope, "", qApp->applicationName ( ) );
+   // QSettings lsettings ( QSettings::NativeFormat, QSettings::UserScope, "", qApp->applicationName ( ) );
+    QSettings lsettings(m_sSettingsFile, QSettings::IniFormat);
+
 //Открываем группу настроек
-    lsettings.beginGroup(SETTINGS_GROUP_VIEW);
+    //lsettings.beginGroup(SETTINGS_GROUP_VIEW);
 //Читаем настройки
     bool lShowToolBar= lsettings.value (SETTING_SHOW_TOOLBAR, true ).toBool();
     msettingsDialog->setShowToolBar ( lShowToolBar );
@@ -231,10 +238,10 @@ void MainWindow::writeSettings ( )
 //Указываем как сохранять настройки. QSettings::NativeFormat — в формате определенном системой
 //QSettings::UserScope — настройки для каждого пользователя отдельно.
 //Также устанавливаем имя организации и название программы.
-    QSettings lSettings ( QSettings::NativeFormat, QSettings::UserScope, "", qApp
-    ->applicationName ( ) );
+    //QSettings lSettings ( QSettings::NativeFormat, QSettings::UserScope, "", qApp->applicationName ( ) );
+     QSettings lSettings(m_sSettingsFile, QSettings::IniFormat);
 //Открываем группу настроек
-    lSettings.beginGroup (SETTINGS_GROUP_VIEW);
+    //lSettings.beginGroup (SETTINGS_GROUP_VIEW);
 //Записываем настройки
     lSettings.setValue (SETTING_SHOW_TOOLBAR, msettingsDialog->isShowToolBar());
     lSettings.setValue (SETTING_SHOW_STATUS_BAR, msettingsDialog->isShowStatusBar());

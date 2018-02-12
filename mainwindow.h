@@ -3,8 +3,6 @@
 
 #include <QMainWindow>
 
-
-#define SETTINGS_GROUP_VIEW "group_view"
 #define SETTING_SHOW_TOOLBAR "show_toolbar"
 #define SETTING_SHOW_STATUS_BAR "show_status_bar"
 
@@ -30,10 +28,12 @@ private slots :
     void slotSave();
     void slotAboutProgram();
     void showPreferencesDialog();
-    void slotPreferencesAccepted ( );
+    void slotPreferencesAccepted();
+
 private :
     QString mFileName;
     SettingsDialog * msettingsDialog;
+    QString m_sSettingsFile;
 private :
     void updateTitle();
     bool askForFileSaveAndclose();
