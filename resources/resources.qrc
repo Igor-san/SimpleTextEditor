@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/actions">
+        <file alias="cut">images/cut.png</file>
+        <file alias="new">images/document_new.png</file>
+        <file alias="exit">images/door_open_in.png</file>
+        <file alias="edit">images/edit.png</file>
+        <file alias="open">images/folder_open.png</file>
+        <file alias="select">images/node_select_all.png</file>
+        <file alias="save">images/save.png</file>
+        <file alias="help">images/system_help.png</file>
+        <file alias="redo">images/arrow_redo.png</file>
+        <file alias="qt">images/qt.png</file>
+        <file alias="undo">images/undo.png</file>
+        <file alias="copy">images/copy.png</file>
+        <file alias="paste">images/edit_paste.png</file>
+        <file alias="preferences">images/service_manager.png</file>
+    </qresource>
+</RCC>
